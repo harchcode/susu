@@ -9,7 +9,12 @@ export class State<T> {
   }
 
   set val(value: T) {
+    const oldVal = this._val;
     this._val = value;
+
+    for (const sub of this._subs) {
+      sub(value, oldVal);
+    }
   }
 
   constructor(initialValue: T) {
