@@ -1,17 +1,22 @@
 {
-  "name": "libtmpl",
+  "name": "susu",
   "version": "1.0.0",
-  "description": "Template for TS library",
+  "description": "Simple JS framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "keywords": [],
+  "keywords": [
+    "javascript",
+    "typescript",
+    "framework",
+    "view"
+  ],
   "author": "Hartono Chandra",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/harchcode/libtmpl"
+    "url": "https://github.com/harchcode/susu"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc src/index.ts --outDir dist --declaration",
+    "build": "rimraf dist && tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint './src/**/*.{js,ts}'",
     "lint-staged": "lint-staged",
@@ -32,6 +37,7 @@
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.2.4"
   }
 }
