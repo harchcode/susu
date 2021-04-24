@@ -17,14 +17,16 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "eslint './src/**/*.{js,ts}'",
+    "build:example": "rimraf dist-example && parcel build example/index.html --out-dir dist-example",
+    "dev:example": "parcel example/index.html --port 1234 --hmr-port 1235",
+    "format": "prettier --write \"{lib,example}/**/*.ts\"",
+    "lint": "eslint './{lib,example}/**/*.{js,ts}'",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "src/**/*.ts": [
+    "{lib,example}/**/*.{js,ts}": [
       "eslint . --fix"
     ]
   },
@@ -36,6 +38,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
+    "parcel-bundler": "^1.12.5",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.2.4"
