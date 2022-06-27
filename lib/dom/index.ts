@@ -1,28 +1,42 @@
 type Child = HTMLElement | SVGElement;
 type Children = string | null | Child | Child[];
 
+export type HTMLElementStyle = {
+  [x in keyof CSSStyleDeclaration]?: CSSStyleDeclaration[x];
+};
+
 export function el<T extends HTMLElement>(
   tag: keyof HTMLElementTagNameMap,
-  attrs: { [x in keyof T]?: T[x] },
+  attrs?: { [x in keyof T]?: T[x] } | { style?: HTMLElementStyle },
   children?: Children
 ): T {
-  const el = document.createElement(tag) as T;
+  const r = document.createElement(tag) as T;
 
-  const keys = Object.keys(attrs);
+  if (attrs !== undefined) {
+    const keys = Object.keys(attrs);
 
-  for (const k of keys) {
-    el[k] = attrs[k];
+    for (const k of keys) {
+      if (k === "style") {
+        const sks = Object.keys(attrs.style);
+
+        for (const sk of sks) {
+          r.style[sk] = attrs.style[sk];
+        }
+      } else {
+        r[k] = attrs[k];
+      }
+    }
   }
 
-  if (!children) return el;
+  if (!children) return r;
 
   if (typeof children === "string") {
-    el.textContent = children;
+    r.textContent = children;
   } else if (Array.isArray(children)) {
-    children.forEach(x => el.append(x));
+    children.forEach(x => r.append(x));
   } else {
-    el.append(children);
+    r.append(children);
   }
 
-  return el;
+  return r;
 }
